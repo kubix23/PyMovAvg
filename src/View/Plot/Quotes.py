@@ -2,6 +2,7 @@ import mplfinance as fplt
 import talib
 
 from Controler.PlotController import PlotController
+from View.Plot.ZoomPan import ZoomPan
 
 
 class Quotes:
@@ -12,6 +13,9 @@ class Quotes:
         self.loadData("PGE")
         ax1 = self.chart.add_subplot(3, 1, (1, 2))
         ax2 = self.chart.add_subplot(3, 1, 3, sharex=ax1)
+        zp = ZoomPan()
+        zp.zoom_factory(ax1)
+        zp.pan_factory(ax1)
 
         ap = self.calculateIndicators(ax2)
 

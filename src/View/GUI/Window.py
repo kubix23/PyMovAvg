@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import tkinter as tk
 
-from matplotlib.backends.backend_tkagg import (NavigationToolbar2Tk, FigureCanvasTkAgg)
+from matplotlib.backends.backend_tkagg import (FigureCanvasTkAgg)
 
 from View.Plot.Quotes import Quotes
 
@@ -14,8 +14,6 @@ class Window(tk.Tk):
         self.title("Matplotlib in Tkinter")
         self.quotes = Quotes(7, 8)
         canvas = FigureCanvasTkAgg(self.quotes.getChart(), master=self)
-        toolbar = NavigationToolbar2Tk(canvas, pack_toolbar=False)
-        toolbar.pack()
         canvas.draw()
         canvas.get_tk_widget().pack(side=tk.TOP, fill=tk.BOTH, expand=1)
         tk.mainloop()
