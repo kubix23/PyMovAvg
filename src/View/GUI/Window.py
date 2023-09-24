@@ -4,6 +4,7 @@ import tkinter as tk
 
 from matplotlib.backends.backend_tkagg import (FigureCanvasTkAgg)
 
+from View.GUI.Toolbar import Toolbar
 from View.Plot.Quotes import Quotes
 
 
@@ -14,6 +15,9 @@ class Window(tk.Tk):
         self.title("Matplotlib in Tkinter")
         self.quotes = Quotes(7, 8)
         canvas = FigureCanvasTkAgg(self.quotes.getChart(), master=self)
-        canvas.draw()
+        Toolbar(canvas, self)
         canvas.get_tk_widget().pack(side=tk.TOP, fill=tk.BOTH, expand=1)
+
+        #tb.destroy()
+
         tk.mainloop()

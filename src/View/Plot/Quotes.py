@@ -19,6 +19,7 @@ class Quotes:
 
         ap = self.calculateIndicators(ax2)
 
+
         fplt.plot(
             self.data,
             type="candle",
