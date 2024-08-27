@@ -1,6 +1,6 @@
 import matplotlib
 
-from finpy import Window
+from pyfinflow import Window
 
 matplotlib.use("TkAgg")
 

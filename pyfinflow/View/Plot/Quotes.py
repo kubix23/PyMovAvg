@@ -2,9 +2,9 @@ import mplfinance as mpf
 from matplotlib.widgets import MultiCursor
 
 from Indicators.MovingAverage import MovingAverage
-from finpy.Scraper.PlotCollector import PlotCollector
-from finpy.View.Plot.AnnotatedCursor import AnnotatedCursor
-from finpy.View.Plot.ZoomPan import ZoomPan
+from pyfinflow.Scraper.PlotCollector import PlotCollector
+from pyfinflow.View.Plot.AnnotatedCursor import AnnotatedCursor
+from pyfinflow.View.Plot.ZoomPan import ZoomPan
 
 
 class Quotation:

@@ -6,8 +6,8 @@ import matplotlib
 import matplotlib.pyplot
 from matplotlib.backends.backend_tkagg import (FigureCanvasTkAgg)
 
-from finpy.View.GUI.Toolbar import Toolbar
-from finpy.View.Plot.Quotes import Quotation
+from pyfinflow.View.GUI.Toolbar import Toolbar
+from pyfinflow.View.Plot.Quotes import Quotation
 
 
 class Window(tk.Tk):
