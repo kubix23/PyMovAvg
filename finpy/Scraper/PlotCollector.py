@@ -1,10 +1,9 @@
-from Model.ScrapData import Scrapdata
+from finpy.Scraper.ScrapData import Scrapdata
 
 
-class PlotController:
-    def __init__(self, view):
+class PlotCollector:
+    def __init__(self):
         self.models: [Scrapdata] = {}
-        self.view = view
 
     def getShares(self, name):
         if name in self.models:
