@@ -8,5 +8,3 @@ matplotlib.use("TkAgg")
 # pd.read_csv("./resources/akcje.csv", delimiter='\t', header=None)
 if __name__ == '__main__':
     Window()
-
-

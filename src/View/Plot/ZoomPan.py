@@ -1,6 +1,6 @@
 
 class ZoomPan:
-    def __init__(self):
+    def __init__(self, ax):
         self.press = None
         self.cur_xlim = None
         self.cur_ylim = None
@@ -10,6 +10,9 @@ class ZoomPan:
         self.y1 = None
         self.xpress = None
         self.ypress = None
+        self.ax = ax
+        self.zoom_factory(ax)
+        self.pan_factory(ax)
 
 
     def zoom_factory(self, ax, base_scale = 2.):
@@ -42,6 +45,7 @@ class ZoomPan:
 
             ax.set_xlim([xdata - new_width * (1-relx), xdata + new_width * (relx)])
             ax.set_ylim([ydata - new_height * (1-rely), ydata + new_height * (rely)])
+
             ax.figure.canvas.draw()
 
         fig = ax.get_figure() # get the figure of interest

@@ -1,41 +1,58 @@
-import mplfinance as fplt
-import talib
+import mplfinance as mpf
+from matplotlib.widgets import MultiCursor
 
 from Controler.PlotController import PlotController
+from View.Plot.AnnotatedCursor import AnnotatedCursor
 from View.Plot.ZoomPan import ZoomPan
 
 
 class Quotes:
     def __init__(self, nrow, ncol):
-        self.controller = PlotController(self)
+        self.chart = None
         self.data = None
-        self.chart = fplt.figure(style='charles', figsize=(nrow, ncol))
-        self.loadData("PGE")
-        ax1 = self.chart.add_subplot(3, 1, (1, 2))
-        ax2 = self.chart.add_subplot(3, 1, 3, sharex=ax1)
-        zp = ZoomPan()
-        zp.zoom_factory(ax1)
-        zp.pan_factory(ax1)
-
-        ap = self.calculateIndicators(ax2)
-
-
-        fplt.plot(
-            self.data,
-            type="candle",
-            ax=ax1,
-            addplot=ap
-        )
+        self.size_row = nrow
+        self.size_col = ncol
+        self.main_ax = None
+        self.controller = PlotController(self)
 
     def getChart(self):
         return self.chart
 
     def loadData(self, name):
         self.data = self.controller.getShares(name)
+        self.data.to_csv("Data"+name+".csv")
 
-    def calculateIndicators(self, plot):
+    def plot(self, name=None):
+        if name is not None:
+            self.loadData(name)
+
+        ap = self.calculateIndicators()
+        self.chart, ax = mpf.plot(
+            self.data,
+            type="candle",
+            addplot=ap,
+            style='charles',
+            returnfig=True,
+            figsize=(self.size_row, self.size_col)
+        )
+        MultiCursor(self.chart.canvas, ax, color='r', lw=1,
+                    horizOn=False, vertOn=True)
+        self.main_ax = ax[0]
+        ZoomPan(ax[0])
+        AnnotatedCursor(
+           y=self.data.Close.array,
+           x=self.data.T.columns.array,
+           textprops={'color': 'blue', 'fontweight': 'bold'},
+           ax=ax[0],
+           useblit=True,
+           color='red',
+           linewidth=2
+        )
+
+
+    def calculateIndicators(self):
         return [
-            fplt.make_addplot(talib.RSI(self.data["Close"]), ax=plot),
-            fplt.make_addplot([20] * len(self.data), ax=plot),
-            fplt.make_addplot([80] * len(self.data), ax=plot),
+            # mpf.make_addplot(None, panel=1),
+            mpf.make_addplot([20] * len(self.data), panel=1),
+            mpf.make_addplot([80] * len(self.data), panel=1),
         ]

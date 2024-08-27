@@ -14,10 +14,12 @@ class Window(tk.Tk):
         super().__init__(screenName, baseName, className, useTk, sync, use)
         self.title("Matplotlib in Tkinter")
         self.quotes = Quotes(7, 8)
+        self.quotes.loadData("MAB")
+        self.quotes.plot()
         canvas = FigureCanvasTkAgg(self.quotes.getChart(), master=self)
-        Toolbar(canvas, self)
-        canvas.get_tk_widget().pack(side=tk.TOP, fill=tk.BOTH, expand=1)
 
-        #tb.destroy()
+        Toolbar(canvas, self)
+
+        canvas.get_tk_widget().pack(side=tk.TOP, fill=tk.BOTH, expand=1)
 
         tk.mainloop()
