@@ -1,5 +1,7 @@
 import mplfinance as mpf
-from matplotlib.widgets import MultiCursor
+import numpy as np
+from matplotlib import pyplot as plt
+from matplotlib.widgets import MultiCursor, Cursor
 
 from Indicators.MovingAverage import MovingAverage
 from pyfinflow.Scraper.PlotCollector import PlotCollector
@@ -9,15 +11,17 @@ from pyfinflow.View.Plot.ZoomPan import ZoomPan
 
 class Quotation:
     def __init__(self, nrow, ncol):
-        self.chart = None
+        self.zoom_pan = None
+        self.figure = None
         self.data = None
         self.size_row = nrow
         self.size_col = ncol
         self.main_ax = None
         self.col = PlotCollector()
+        self.cursor = None
 
     def getChart(self):
-        return self.chart
+        return self.figure
 
     def loadDataByName(self, name):
         self.data = self.col.getShares(name)
@@ -29,39 +33,26 @@ class Quotation:
         if name is not None:
             self.loadDataByName(name)
         elif data_csv is not None:
-            self.loadDataByName(name)
-
+            self.loadDataByFile(data_csv)
         if self.data is not None:
             ap = self.calculateIndicators()
-            self.chart, ax = mpf.plot(
+
+            self.figure, axes = mpf.plot(
                 self.data,
-                type="candle",
+                type="candlestick",
                 addplot=ap,
                 style='charles',
-                returnfig=True,
-                figsize=(self.size_row, self.size_col)
+                figsize=(self.size_row, self.size_col),
+                returnfig=True
             )
-            MultiCursor(self.chart.canvas, ax, color='r', lw=1,
-                        horizOn=False, vertOn=True)
-            self.main_ax = ax[0]
-            ZoomPan(ax[0])
-            AnnotatedCursor(
-                y=self.data.Close.array,
-                x=self.data.T.columns.array,
-                textprops={'color': 'blue', 'fontweight': 'bold'},
-                ax=ax[0],
-                useblit=True,
-                color='red',
-                linewidth=2
-            )
+            self.main_ax = axes[0]
+            self.cursor = AnnotatedCursor(self.data, self.main_ax, useblit=True, color='r', lw=1, horizOn=False, vertOn=True)
+            self.zoom_pan = ZoomPan(self.figure, axes, self.data)
+
 
     def calculateIndicators(self):
         return [
-            mpf.make_addplot(MovingAverage.calculate(self.data, 'Open', type='SMA'), panel=0),
-            mpf.make_addplot(MovingAverage.calculate(self.data, 'Open', type='WMA'), panel=0),
-            mpf.make_addplot(MovingAverage.calculate(self.data, 'Open', type='EMA'), panel=0),
-            mpf.make_addplot([20] * len(self.data), panel=1),
-            mpf.make_addplot([80] * len(self.data), panel=1),
+            mpf.make_addplot(MovingAverage.calculate(self.data, 'Open', type='SMA'), panel=0, label="SMA"),
+            mpf.make_addplot(MovingAverage.calculate(self.data, 'Open', type='WMA'), panel=0, label="WMA"),
+            mpf.make_addplot(MovingAverage.calculate(self.data, 'Open', type='EMA'), panel=0, label="EMA"),
         ]
-
-

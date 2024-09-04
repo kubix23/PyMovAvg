@@ -11,7 +11,7 @@ class Toolbar(NavigationToolbar2Tk):
         canvas.get_tk_widget().master.bind('<Key>', self.toggle)
 
     def toggle(self, event):
-        if event.keycode == 123:
+        if event.keysym == 'Alt_L':
             if self.state is True:
                 self.pack_forget()
                 self.state = False
