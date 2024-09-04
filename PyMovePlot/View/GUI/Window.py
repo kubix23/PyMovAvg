@@ -8,8 +8,8 @@ import pandas
 from matplotlib import pyplot as plt
 from matplotlib.backends.backend_tkagg import (FigureCanvasTkAgg)
 
-from pyfinflow.View.GUI.Toolbar import Toolbar
-from pyfinflow.View.Plot.Quotes import Quotation
+from PyMovePlot.View.GUI.Toolbar import Toolbar
+from PyMovePlot.View.Plot.Quotes import Quotation
 
 
 class Window(tk.Tk):

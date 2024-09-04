@@ -1,4 +1,4 @@
-from pyfinflow.Scraper.ScrapData import Scrapdata
+from PyMovePlot.Scraper.ScrapData import Scrapdata
 
 
 class PlotCollector:

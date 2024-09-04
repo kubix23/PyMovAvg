@@ -4,9 +4,9 @@ from matplotlib import pyplot as plt
 from matplotlib.widgets import MultiCursor, Cursor
 
 from Indicators.MovingAverage import MovingAverage
-from pyfinflow.Scraper.PlotCollector import PlotCollector
-from pyfinflow.View.Plot.AnnotatedCursor import AnnotatedCursor
-from pyfinflow.View.Plot.ZoomPan import ZoomPan
+from PyMovePlot.Scraper.PlotCollector import PlotCollector
+from PyMovePlot.View.Plot.AnnotatedCursor import AnnotatedCursor
+from PyMovePlot.View.Plot.ZoomPan import ZoomPan
 
 
 class Quotation:
