@@ -1,4 +1,4 @@
-from Indicators.Indicator import Indicator
+from .Indicator import Indicator
 
 
 class MovingAverage(Indicator):

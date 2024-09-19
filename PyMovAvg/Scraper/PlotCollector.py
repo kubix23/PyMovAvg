@@ -1,11 +1,11 @@
-from PyMovePlot.Scraper.ScrapData import Scrapdata
+from .ScrapData import Scrapdata
 
 
 class PlotCollector:
     def __init__(self):
         self.models: [Scrapdata] = {}
 
-    def getShares(self, name):
+    def getQuotes(self, name):
         if name in self.models:
             obj = self.models[name]
         else:
