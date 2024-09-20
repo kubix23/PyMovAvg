@@ -3,9 +3,17 @@ requires = ["setuptools>=64"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "PyMovePlot"
-requires-python = ">=3.8"
+name = "PyMovAvg"
+requires-python = "<=3.10"
 description = ""
+version = "1.0"
 authors = [
   {name = "Jakub Buczkowski"},
+]
+
+dependencies = [
+  "pandas>=2.2.2",
+  "matplotlib>=3.9.2",
+  "pandas-datareader>=0.10.0",
+  "mplfinance=0.12.10b0",
 ]

@@ -1,13 +1,5 @@
-import time
-
-import matplotlib
-from matplotlib import pyplot as plt
-from matplotlib.transforms import Bbox
-from matplotlib.widgets import Cursor
-
-
 class ZoomPan:
-    def __init__(self, figure, axes, data=None):
+    def __init__(self, figure, axes, useblit=None):
         self.press = None
         self.cur_xlim = None
         self.cur_ylim = None
@@ -21,8 +13,7 @@ class ZoomPan:
         self.zoom_factory(axes[0])
         self.pan_factory(axes[0])
         self.bg = [figure.canvas.copy_from_bbox(ax.bbox) for ax in axes]
-        self.data = data
-
+        self.blit = useblit
 
     def zoom_factory(self, ax, base_scale=2.):
         def zoom(event):
@@ -52,7 +43,7 @@ class ZoomPan:
             ax.set_xlim([xdata - new_width * (1 - relx), xdata + new_width * (relx)])
             ax.set_ylim([ydata - new_height * (1 - rely), ydata + new_height * (rely)])
 
-            fig.canvas.draw()
+            fig.canvas.draw_idle()
 
         fig = ax.get_figure()  # get the figure of interest
         fig.canvas.mpl_connect('scroll_event', zoom)
@@ -80,12 +71,15 @@ class ZoomPan:
             ax.set_xlim(self.cur_xlim)
             ax.set_ylim(self.cur_ylim)
 
-            for (axi, bg) in zip(self.axes, self.bg):
-                fig.canvas.restore_region(bg)
-                for line in axi.lines:
-                    ax.draw_artist(line)
-                    fig.canvas.blit(ax.bbox)
-            fig.canvas.flush_events()
+            if self.blit:
+                for (axi, bg) in zip(self.axes, self.bg):
+                    fig.canvas.restore_region(bg)
+                    for line in axi.lines:
+                        ax.draw_artist(line)
+                        fig.canvas.blit(ax.bbox)
+                fig.canvas.flush_events()
+            else:
+                fig.canvas.draw_idle()
 
         def clear(event):
             self.bg = [fig.canvas.copy_from_bbox(axi.bbox) for axi in self.axes]

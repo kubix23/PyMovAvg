@@ -1,5 +1,3 @@
-import numpy as np
-from matplotlib import lines
 from matplotlib.widgets import Cursor
 
 
@@ -16,10 +14,10 @@ class AnnotatedCursor(Cursor):
         super().__init__(ax, horizOn=horizOn, vertOn=vertOn, useblit=useblit, **lineprops)
 
         self.x_data = range(data.shape[0])
-        self.y_data = data.iloc[:,:-1]
+        self.y_data = data
         temp = ["{0}: {{{1}:.2f}}\n".format(self.y_data.keys()[num], num) for num in range(0, len(self.y_data.keys()))]
         self.numberformat = ''.join(temp)
-        self.offset = np.array((5, 5))
+        self.offset = [5, 5]
         self.dataaxis = 'x'
         self.press = None
         self.set_position(0)
@@ -63,7 +61,6 @@ class AnnotatedCursor(Cursor):
             self.text.set_position(temp)
             self.text.set_text(self.numberformat.format(*self.y_data.values[plotpoint_x]))
             self.text.set_visible(self.visible)
-            self.needclear = True
             self.lastdrawnplotpoint_x = plotpoint_x
         else:
             self.text.set_visible(False)
@@ -86,7 +83,7 @@ class AnnotatedCursor(Cursor):
                              f"be 'x' or 'y'")
 
         if pos is not None and lim[0] <= pos <= lim[1]:
-            index = np.searchsorted(data, pos)
+            index = data.index(max(min(int(pos)-data[0], max(data)), min(data)))
             if index < 0 or index >= len(data):
                 return None
             return xdata[index]
