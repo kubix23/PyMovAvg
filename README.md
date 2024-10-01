@@ -38,7 +38,7 @@ import Window`.
 
 To call the program window we need create class `Window()` We can pass the data that is to be displayed in the program 
 via the constructor or via the `showData()` method. We can do this via the `data=` parameter, then we pass the DataFrame 
-data in the format [Date,...]. he default format is [Date, Open, High, Low, Close]. If there are no other columns than 
+data in the format [Date,...]. The default format is [Date, Open, High, Low, Close]. If there are no other columns than 
 Date, the data loader converts them to the default format. Averages and the default displayed column are calculated based
 on the Close column. Another option for loading data is to use the internet API (`name=` parameter) and provide the name
 in the format like: ticker symbol + "." + short country name e.g. "11B.PL", "EBAY.US". The last step is to call the 
