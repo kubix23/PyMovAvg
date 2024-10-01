@@ -57,6 +57,8 @@ class Quotation:
                 returnfig=True
             )
             self.main_ax = axes[0]
+            self.main_ax.yaxis.set_label_position("left")
+            self.main_ax.yaxis.tick_left()
             for i in indicators:
                 self.data[i["Name"]] = i["Data"]
             self.cursor = AnnotatedCursor(self.data,
