@@ -29,10 +29,29 @@ values for a given discrete argument.
 
 ## Installation
 
+After downloading the package, unpack it in a folder of your choice. Then, by calling the command
+`pip install <package folder name>`in the terminal associated with a given python environment, it will install the 
+package in that environment. Now all you need to do is import the main window `from PyMovePlot.View.GUI.Window 
+import Window`.
+
 ## Example
 
 To call the program window we need create class `Window()` We can pass the data that is to be displayed in the program 
 via the constructor or via the `showData()` method. We can do this via the `data=` parameter, then we pass the DataFrame 
-data in the format \[Date,...]. Another option for loading data is to use the internet API (`name=` parameter) and 
-provide the name in the format like ticker symbol + "." + short country name e.g. "11B.PL", "EBAY.US". The last step is 
-to call the `mainloop()` method responsible for the entire window startup.
+data in the format [Date,...]. he default format is [Date, Open, High, Low, Close]. If there are no other columns than 
+Date, the data loader converts them to the default format. Averages and the default displayed column are calculated based
+on the Close column. Another option for loading data is to use the internet API (`name=` parameter) and provide the name
+in the format like: ticker symbol + "." + short country name e.g. "11B.PL", "EBAY.US". The last step is to call the 
+`mainloop()` method responsible for the entire window startup.
+
+### Example library call:
+```python
+ w = Window()
+ test = pd.read_csv('data.csv', index_col='Date', parse_dates=['Date'])
+ w.showData(data=test, period=20)
+ w.mainloop()
+```
+
+### Displayed graph:
+
+<img src="./Image/gui.png" alt="gui" width="700"/>
