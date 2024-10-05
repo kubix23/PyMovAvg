@@ -1,4 +1,4 @@
-# PyMovePlot
+# PyMovAvg
 ## About
 The library involves the development of software for time series analysis,
 which enables the identification of trends, patterns, and forecasting of future
